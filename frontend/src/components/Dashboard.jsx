@@ -11,8 +11,15 @@ export default function Dashboard({ user, onLogout }) {
     const [metrics, setMetrics] = useState({});
 
     useEffect(() => {
+        const apiUrl = import.meta.env.VITE_API_URL;
+        if (!apiUrl) {
+            setError("Configuration Error: VITE_API_URL is not set. Please configure it in your deployment settings.");
+            return;
+        }
+        console.log("Dashboard mounted. API URL:", apiUrl);
+
         if (activeTab === 'metrics') {
-            fetch(`${import.meta.env.VITE_API_URL}/api/metrics`)
+            fetch(`${apiUrl}/api/metrics`)
                 .then(res => res.json())
                 .then(data => setMetrics(data))
                 .catch(err => console.error("Failed to load metrics", err));
@@ -47,9 +54,11 @@ export default function Dashboard({ user, onLogout }) {
 
             const data = await response.json();
             setPrediction(data);
+            const data = await response.json();
+            setPrediction(data);
         } catch (error) {
             console.error("Prediction failed", error);
-            setError("Analysis failed. Please check your connection and try again. Ensure the backend is running.");
+            setError(`Analysis failed: ${error.message}. (Backend: ${import.meta.env.VITE_API_URL})`);
         } finally {
             setLoading(false);
         }
