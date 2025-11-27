@@ -33,11 +33,18 @@ export default function Dashboard({ user, onLogout }) {
         formData.append('file', file);
         formData.append('model_name', 'XGBoost'); // Default
 
+        console.log("Using API URL:", import.meta.env.VITE_API_URL);
+
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/predict`, {
                 method: 'POST',
                 body: formData,
             });
+
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status}`);
+            }
+
             const data = await response.json();
             setPrediction(data);
         } catch (error) {
