@@ -7,7 +7,7 @@ It combines multi-model ML pipelines, explainable AI, and clinical-grade reporti
 
 ## 🌐 Live Demo
 
-🔗 **Deployed Application:** https://breath-analysis.vercel.app/
+🔗 **Deployed Application:** https://breath-analysis-gvr8.vercel.app/
 
 ---
 
@@ -42,3 +42,4 @@ It combines multi-model ML pipelines, explainable AI, and clinical-grade reporti
 ### 1️⃣ Install Dependencies
 ```bash
 pip install -r requirements.txt
+
