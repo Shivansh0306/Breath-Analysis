@@ -1,0 +1,1 @@
+{"Logistic_Regression": {"accuracy": 0.8949416342412452, "f1_score": 0.8947120855777255}, "Random_Forest": {"accuracy": 0.9571984435797666, "f1_score": 0.9571335425859376}, "XGBoost": {"accuracy": 0.9688715953307393, "f1_score": 0.9688144642640457}, "SVM": {"accuracy": 0.8832684824902723, "f1_score": 0.8829690346083788}}
