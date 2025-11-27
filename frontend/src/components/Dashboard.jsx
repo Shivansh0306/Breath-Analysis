@@ -9,6 +9,7 @@ export default function Dashboard({ user, onLogout }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [metrics, setMetrics] = useState({});
+    const [serverInfo, setServerInfo] = useState(null);
 
     useEffect(() => {
         const apiUrl = import.meta.env.VITE_API_URL;
@@ -24,6 +25,13 @@ export default function Dashboard({ user, onLogout }) {
                 .then(data => setMetrics(data))
                 .catch(err => console.error("Failed to load metrics", err));
         }
+
+        // Fetch Server Debug Info
+        fetch(`${apiUrl}/api/debug`)
+            .then(res => res.json())
+            .then(data => setServerInfo(data))
+            .catch(err => console.error("Failed to load debug info", err));
+
     }, [activeTab]);
 
     const handleFileChange = (e) => {
@@ -164,7 +172,13 @@ export default function Dashboard({ user, onLogout }) {
                         <div style={{ background: '#f8f9fa', padding: '1rem', borderRadius: '8px', marginBottom: '2rem', fontSize: '0.8rem', color: '#666', border: '1px solid #dee2e6' }}>
                             <strong>Debug Info:</strong><br />
                             API URL: {import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : "NOT SET"}<br />
-                            Mode: {import.meta.env.MODE}
+                            Mode: {import.meta.env.MODE}<br />
+                            {serverInfo && (
+                                <>
+                                    Server sklearn: {serverInfo['scikit-learn']}<br />
+                                    Server xgboost: {serverInfo['xgboost']}
+                                </>
+                            )}
                         </div>
 
                         <div

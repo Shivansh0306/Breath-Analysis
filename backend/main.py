@@ -117,3 +117,16 @@ async def get_metrics():
         with open(metrics_path, "r") as f:
             return json.load(f)
     return {}
+
+@app.get("/api/debug")
+async def get_debug_info():
+    import sklearn
+    import xgboost
+    import pandas
+    import joblib
+    return {
+        "scikit-learn": sklearn.__version__,
+        "xgboost": xgboost.__version__,
+        "pandas": pandas.__version__,
+        "joblib": joblib.__version__
+    }
