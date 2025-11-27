@@ -158,7 +158,14 @@ export default function Dashboard({ user, onLogout }) {
             >
                 {activeTab === 'predict' && (
                     <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-                        <h1 style={{ color: '#4a4e69', marginBottom: '2rem' }}>Start New Diagnosis</h1>
+                        <h1 style={{ color: '#4a4e69', marginBottom: '2rem' }}>Start New Diagnosis (v3 Live)</h1>
+
+                        {/* Debug Info Section */}
+                        <div style={{ background: '#f8f9fa', padding: '1rem', borderRadius: '8px', marginBottom: '2rem', fontSize: '0.8rem', color: '#666', border: '1px solid #dee2e6' }}>
+                            <strong>Debug Info:</strong><br />
+                            API URL: {import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL : "NOT SET"}<br />
+                            Mode: {import.meta.env.MODE}
+                        </div>
 
                         <div
                             style={{
