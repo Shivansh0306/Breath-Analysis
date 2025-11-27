@@ -54,8 +54,6 @@ export default function Dashboard({ user, onLogout }) {
 
             const data = await response.json();
             setPrediction(data);
-            const data = await response.json();
-            setPrediction(data);
         } catch (error) {
             console.error("Prediction failed", error);
             setError(`Analysis failed: ${error.message}. (Backend: ${import.meta.env.VITE_API_URL})`);
