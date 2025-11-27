@@ -18,6 +18,7 @@ app = FastAPI()
 origins = [
     "http://localhost:5173",
     "http://localhost:3000",
+    "https://breath-analysis.vercel.app",
     "*"
 ]
 

@@ -7,11 +7,12 @@ export default function Dashboard({ user, onLogout }) {
     const [file, setFile] = useState(null);
     const [prediction, setPrediction] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [metrics, setMetrics] = useState({});
 
     useEffect(() => {
         if (activeTab === 'metrics') {
-            fetch('http://localhost:8000/api/metrics')
+            fetch(`${import.meta.env.VITE_API_URL}/api/metrics`)
                 .then(res => res.json())
                 .then(data => setMetrics(data))
                 .catch(err => console.error("Failed to load metrics", err));
@@ -25,13 +26,15 @@ export default function Dashboard({ user, onLogout }) {
     const handlePredict = async () => {
         if (!file) return;
         setLoading(true);
+        setError(null);
+        setPrediction(null);
 
         const formData = new FormData();
         formData.append('file', file);
         formData.append('model_name', 'XGBoost'); // Default
 
         try {
-            const response = await fetch('http://localhost:8000/api/predict', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/predict`, {
                 method: 'POST',
                 body: formData,
             });
@@ -39,6 +42,7 @@ export default function Dashboard({ user, onLogout }) {
             setPrediction(data);
         } catch (error) {
             console.error("Prediction failed", error);
+            setError("Analysis failed. Please check your connection and try again. Ensure the backend is running.");
         } finally {
             setLoading(false);
         }
@@ -48,7 +52,7 @@ export default function Dashboard({ user, onLogout }) {
         if (!prediction) return;
 
         try {
-            const response = await fetch('http://localhost:8000/api/report', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/report`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -172,6 +176,16 @@ export default function Dashboard({ user, onLogout }) {
                                 {loading ? 'Running AI Inference...' : 'Run Analysis'}
                             </button>
                         </div>
+
+                        {error && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                style={{ marginTop: '2rem', padding: '1rem', background: '#ffe3e3', color: '#e03131', borderRadius: '12px' }}
+                            >
+                                {error}
+                            </motion.div>
+                        )}
 
                         {prediction && (
                             <motion.div
