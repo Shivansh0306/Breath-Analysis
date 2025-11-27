@@ -41,6 +41,8 @@ export default function Dashboard({ user, onLogout }) {
         formData.append('model_name', 'XGBoost'); // Default
 
         console.log("Using API URL:", import.meta.env.VITE_API_URL);
+        // Temporary debugging alert
+        alert(`Starting Analysis... Backend URL: ${import.meta.env.VITE_API_URL || 'UNDEFINED'}`);
 
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/predict`, {
@@ -56,6 +58,7 @@ export default function Dashboard({ user, onLogout }) {
             setPrediction(data);
         } catch (error) {
             console.error("Prediction failed", error);
+            alert(`Error: ${error.message}`);
             setError(`Analysis failed: ${error.message}. (Backend: ${import.meta.env.VITE_API_URL})`);
         } finally {
             setLoading(false);
